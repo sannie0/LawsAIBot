@@ -39,3 +39,20 @@ headers = {
 response = requests.post(url, headers=headers, json=promt)
 result = response.text
 print(result)
+
+
+
+
+
+
+
+
+
+'''
+не нужно
+# Получение API-ключа из переменной среды
+api_key = os.getenv("API_KEY")
+
+#Получение id из переменной среды
+folder_id = os.getenv("FOLDER_ID")
+'''
