@@ -1,11 +1,13 @@
 import telebot
 from otherconvert import *
 
+# Инициализация бота с токеном
 botTimeWeb = telebot.TeleBot('7940475138:AAEuIrmByKa0dnC8pyxVblA8VjZj69VroOc')
 
 user_ready_for_questions = {}
 
 
+# Обработчик команды /start при запуске бота
 @botTimeWeb.message_handler(commands=['start'])
 def start_bot(message):
     first_mess = f"<b>{message.from_user.first_name}</b>, привет!\nЯ умею находить ответы на вопросы, опираясь на отправленный вами документ.\n\nПожалуйста, загрузите файл (.pdf)"
@@ -13,6 +15,7 @@ def start_bot(message):
     user_ready_for_questions[message.chat.id] = False
 
 
+# Обработчик для сообщений с документами
 @botTimeWeb.message_handler(content_types=['document'])
 def handle_document(message):
     if message.document.mime_type == 'application/pdf':
@@ -43,6 +46,8 @@ def handle_document(message):
     else:
         botTimeWeb.send_message(message.chat.id, "Файл должен быть формата PDF")
 
+
+# Обработчик для текстовых сообщений от пользователя
 @botTimeWeb.message_handler(content_types=['text'])
 def handle_text_message(message):
     print(f"{message.from_user.first_name} написал: {message.text}")
@@ -54,4 +59,6 @@ def handle_text_message(message):
     else:
         botTimeWeb.send_message(message.chat.id, "Для начала работы необходимо загрузить файл")
 
+
+# Запуск бота в режиме бесконечного опроса
 botTimeWeb.infinity_polling()
